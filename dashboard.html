@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard NPS - Mídia de Performance</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-[#071A2E] min-h-screen text-slate-100 p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto space-y-8">
+        
+        <!-- Cabeçalho -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center bg-white/10 backdrop-blur-md p-6 rounded-[2rem] border border-white/10 shadow-lg gap-4">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-white">Dashboard de Satisfação</h1>
+                <p class="text-slate-300 text-sm mt-1">Métricas de NPS e Avaliação de Mídia de Performance</p>
+            </div>
+            <a href="index.html" class="bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-medium text-sm transition shadow-md">
+                Ver Formulário
+            </a>
+        </div>
+
+        <!-- Bloco Principal: NPS Geral -->
+        <div class="bg-white rounded-[2.5rem] p-6 md:p-8 text-slate-800 shadow-xl space-y-6">
+            <div class="text-center max-w-lg mx-auto">
+                <span class="bg-slate-100 text-slate-600 text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">Net Promoter Score</span>
+                <h2 id="nps-score" class="text-5xl md:text-6xl font-black text-slate-900 mt-3">--</h2>
+                <p id="nps-classification" class="text-sm font-semibold text-slate-500 mt-1">Calculando avaliações...</p>
+            </div>
+
+            <!-- Escala Visual 1-10 -->
+            <div class="grid grid-cols-10 gap-1 md:gap-2 pt-4 border-t border-slate-100">
+                <!-- Notas 1 a 10 geradas dinamicamente ou estáticas -->
+                <div class="text-center"><div class="bg-pink-100 text-pink-600 rounded-xl py-2 font-bold text-xs md:text-sm">1</div><span id="count-1" class="text-xs text-slate-400 mt-1 block">0</span></div>
+                <div class="text-center"><div class="bg-pink-100 text-pink-600 rounded-xl py-2 font-bold text-xs md:text-sm">2</div><span id="count-2" class="text-xs text-slate-400 mt-1 block">0</span></div>
+                <div class="text-center"><div class="bg-pink-100 text-pink-600 rounded-xl py-2 font-bold text-xs md:text-sm">3</div><span id="count-3" class="text-xs text-slate-400 mt-1 block">0</span></div>
+                <div class="text-center"><div class="bg-pink-100 text-pink-600 rounded-xl py-2 font-bold text-xs md:text-sm">4</div><span id="count-4" class="text-xs text-slate-400 mt-1 block">0</span></div>
+                <div class="text-center"><div class="bg-pink-100 text-pink-600 rounded-xl py-2 font-bold text-xs md:text-sm">5</div><span id="count-5" class="text-xs text-slate-400 mt-1 block">0</span></div>
+                <div class="text-center"><div class="bg-pink-100 text-pink-600 rounded-xl py-2 font-bold text-xs md:text-sm">6</div><span id="count-6" class="text-xs text-slate-400 mt-1 block">0</span></div>
+                <div class="text-center"><div class="bg-amber-100 text-amber-600 rounded-xl py-2 font-bold text-xs md:text-sm">7</div><span id="count-7" class="text-xs text-slate-400 mt-1 block">0</span></div>
+                <div class="text-center"><div class="bg-amber-100 text-amber-600 rounded-xl py-2 font-bold text-xs md:text-sm">8</div><span id="count-8" class="text-xs text-slate-400 mt-1 block">0</span></div>
+                <div class="text-center"><div class="bg-emerald-100 text-emerald-600 rounded-xl py-2 font-bold text-xs md:text-sm">9</div><span id="count-9" class="text-xs text-slate-400 mt-1 block">0</span></div>
+                <div class="text-center"><div class="bg-emerald-100 text-emerald-600 rounded-xl py-2 font-bold text-xs md:text-sm">10</div><span id="count-10" class="text-xs text-slate-400 mt-1 block">0</span></div>
+            </div>
+
+            <!-- Faixas: Detratores, Passivos, Promotores -->
+            <div class="grid grid-cols-3 gap-3 pt-2">
+                <div class="bg-pink-50 p-4 rounded-2xl text-center border border-pink-100">
+                    <span class="text-xs font-bold text-pink-600 uppercase">Detratores (0-6)</span>
+                    <p id="detractors-count" class="text-xl md:text-2xl font-black text-pink-700 mt-1">0</p>
+                    <span id="detractors-pct" class="text-xs font-medium text-pink-500">0%</span>
+                </div>
+                <div class="bg-amber-50 p-4 rounded-2xl text-center border border-amber-100">
+                    <span class="text-xs font-bold text-amber-600 uppercase">Passivos (7-8)</span>
+                    <p id="passives-count" class="text-xl md:text-2xl font-black text-amber-700 mt-1">0</p>
+                    <span id="passives-pct" class="text-xs font-medium text-amber-500">0%</span>
+                </div>
+                <div class="bg-emerald-50 p-4 rounded-2xl text-center border border-emerald-100">
+                    <span class="text-xs font-bold text-emerald-600 uppercase">Promotores (9-10)</span>
+                    <p id="promoters-count" class="text-xl md:text-2xl font-black text-emerald-700 mt-1">0</p>
+                    <span id="promoters-pct" class="text-xs font-medium text-emerald-500">0%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção de Feedback Detalhado / Histórico -->
+        <div class="bg-white rounded-[2.5rem] p-6 md:p-8 text-slate-800 shadow-xl space-y-4">
+            <h3 class="text-lg font-bold text-slate-900">Respostas Recentes dos Clientes</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-slate-100 text-xs text-slate-400 uppercase tracking-wider">
+                            <th class="py-3 px-4">Data</th>
+                            <th class="py-3 px-4">Cliente</th>
+                            <th class="py-3 px-4">Nota</th>
+                            <th class="py-3 px-4">Comunicação</th>
+                            <th class="py-3 px-4">Relatórios</th>
+                            <th class="py-3 px-4">Sugestões</th>
+                        </tr>
+                    </thead>
+                    <tbody id="responses-table" class="text-sm text-slate-600">
+                        <tr>
+                            <td colspan="6" class="py-6 text-center text-slate-400">Carregando dados da planilha...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // COLE AQUI A SUA URL DO GOOGLE APPS SCRIPT (A mesma que retorna o doGet em JSON)
+        const SHEET_API_URL = 'SUA_URL_DO_GOOGLE_APPS_SCRIPT_AQUI';
+
+        async function loadDashboardData() {
+            if (SHEET_API_URL.includes('SUA_URL')) {
+                document.getElementById('nps-classification').innerText = 'Configure a variável SHEET_API_URL no código.';
+                return;
+            }
+
+            try {
+                const response = await fetch(SHEET_API_URL);
+                const data = await response.json();
+
+                if (!data || data.length === 0) {
+                    document.getElementById('nps-classification').innerText = 'Nenhuma resposta registrada ainda.';
+                    return;
+                }
+
+                processData(data);
+            } catch (error) {
+                console.error('Erro ao buscar dados:', error);
+                document.getElementById('nps-classification').innerText = 'Erro ao carregar dados da planilha.';
+            }
+        }
+
+        function processData(rows) {
+            let counts = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0, 7:0, 8:0, 9:0, 10:0};
+            let detractors = 0;
+            let passives = 0;
+            let promoters = 0;
+            let totalResponses = rows.length;
+
+            const tableBody = document.getElementById('responses-table');
+            tableBody.innerHTML = '';
+
+            rows.forEach(row => {
+                let score = parseInt(row.satisfactionScore);
+                if (!isNaN(score)) {
+                    if (counts[score] !== undefined) counts[score]++;
+
+                    if (score <= 6) detractors++;
+                    else if (score === 7 || score === 8) passives++;
+                    else if (score >= 9) promoters++;
+                }
+
+                // Preencher tabela
+                let tr = document.createElement('tr');
+                tr.className = 'border-b border-slate-50 hover:bg-slate-50/50 transition';
+                tr.innerHTML = `
+                    <td class="py-3 px-4 text-xs text-slate-400">${row.date || '-'}</td>
+                    <td class="py-3 px-4 font-semibold text-slate-800">${row.clientName || 'Anônimo'}</td>
+                    <td class="py-3 px-4"><span class="px-2.5 py-1 rounded-lg text-xs font-bold ${score >= 9 ? 'bg-emerald-100 text-emerald-700' : score >= 7 ? 'bg-amber-100 text-amber-700' : 'bg-pink-100 text-pink-700'}">${score}</span></td>
+                    <td class="py-3 px-4">${row.communication || '-'}</td>
+                    <td class="py-3 px-4">${row.reports || '-'}</td>
+                    <td class="py-3 px-4 italic text-slate-500">${row.suggestions || 'Nenhuma'}</td>
+                `;
+                tableBody.appendChild(tr);
+            });
+
+            // Atualizar contadores individuais 1-10
+            for (let i = 1; i <= 10; i++) {
+                document.getElementById(`count-${i}`).innerText = counts[i];
+            }
+
+            // Atualizar blocos de resumo
+            document.getElementById('detractors-count').innerText = detractors;
+            document.getElementById('passives-count').innerText = passives;
+            document.getElementById('promoters-count').innerText = promoters;
+
+            document.getElementById('detractors-pct').innerText = totalResponses ? Math.round((detractors / totalResponses) * 100) + '%' : '0%';
+            document.getElementById('passives-pct').innerText = totalResponses ? Math.round((passives / totalResponses) * 100) + '%' : '0%';
+            document.getElementById('promoters-pct').innerText = totalResponses ? Math.round((promoters / totalResponses) * 100) + '%' : '0%';
+
+            // Calcular NPS final: ((Promotores - Detratores) / Total) * 100
+            let npsValue = totalResponses ? Math.round(((promoters - detractors) / totalResponses) * 100) : 0;
+            document.getElementById('nps-score').innerText = npsValue;
+
+            let classificationText = 'Zona de Aperfeiçoamento';
+            if (npsValue > 75) classificationText = 'Zona de Excelência 🌟';
+            else if (npsValue > 50) classificationText = 'Zona de Qualidade 🚀';
+            else if (npsValue > 0) classificationText = 'Zona de Aperfeiçoamento 💡';
+            else classificationText = 'Zona Crítica ⚠️';
+
+            document.getElementById('nps-classification').innerText = classificationText;
+        }
+
+        loadDashboardData();
+    </script>
+</body>
+</html>
