@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesquisa de Satisfação | Mídia de Performance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#071A2E',
+                            DEFAULT: '#0A2540',
+                            light: '#1D4ED8',
+                            accent: '#3B82F6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #071A2E 0%, #0A2540 50%, #1e3a8a 100%);
+            background-attachment: fixed;
+        }
+        .card-stack {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A2540;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e3a8a;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="min-h-full flex flex-col items-center justify-start p-4 sm:p-6 md:p-8 text-gray-800">
+
+    <header class="w-full max-w-xl mx-auto text-center mb-8 mt-4">
+        <div class="inline-flex items-center justify-center p-3 bg-white/10 backdrop-blur-md rounded-2xl mb-4 text-white shadow-lg border border-white/10">
+            <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+            </svg>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Experiência em Mídia de Performance</h1>
+        <p class="text-blue-200/80 text-sm sm:text-base mt-2 max-w-md mx-auto">Sua opinião é essencial para evoluirmos nossos resultados e parcerias. Leva menos de 2 minutos!</p>
+    </header>
+
+    <main class="w-full max-w-xl mx-auto mb-12">
+        <form id="surveyForm" class="space-y-4" onsubmit="handleFormSubmit(event)">
+            
+            <!-- CARD 1: Identificação -->
+            <div class="bg-white rounded-[2rem] p-6 sm:p-8 shadow-2xl card-stack border border-white/20">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full">Passo 1 de 5</span>
+                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
+                <label for="clientName" class="block text-lg font-bold text-gray-900 mb-2">Nome da sua Empresa ou Seu Nome:</label>
+                <p class="text-xs text-gray-500 mb-4">Como podemos te identificar?</p>
+                <input type="text" id="clientName" required placeholder="Ex: Tech Solutions / João Silva" 
+                    class="w-full px-4 py-3.5 rounded-xl border border-gray-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 outline-none transition text-base">
+            </div>
+
+            <!-- CARD 2: Nota de Satisfação Geral -->
+            <div class="bg-white rounded-[2rem] p-6 sm:p-8 shadow-2xl card-stack border border-white/20">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full">Passo 2 de 5</span>
+                </div>
+                <label class="block text-lg font-bold text-gray-900 mb-1">Satisfação Geral</label>
+                <p class="text-xs text-gray-500 mb-4">De 0 a 10, qual o seu nível geral de satisfação com o nosso trabalho?</p>
+                
+                <div class="grid grid-cols-6 sm:grid-cols-11 gap-1.5 sm:gap-2 my-4" id="scoreContainer">
+                    <!-- Gerado via JS ou buttons diretos -->
+                    <button type="button" onclick="setScore(0)" class="score-btn py-2.5 text-xs sm:text-sm font-semibold rounded-lg border border-gray-200 hover:border-blue-600 hover:bg-blue-50 transition">0</button>
+                    <button type="button" onclick="setScore(1)" class="score-btn py-2.5 text-xs sm:text-sm font-semibold rounded-lg border border-gray-200 hover:border-blue-600 hover:bg-blue-50 transition">1</button>
+                    <button type="button" onclick="setScore(2)" class="score-btn py-2.5 text-xs sm:text-sm font-semibold rounded-lg border border-gray-200 hover:border-blue-600 hover:bg-blue-50 transition">2</button>
+                    <button type="button" onclick="setScore(3)" class="score-btn py-2.5 text-xs sm:text-sm font-semibold rounded-lg border border-gray-200 hover:border-blue-600 hover:bg-blue-50 transition">3</button>
+                    <button type="button" onclick="setScore(4)" class="score-btn py-2.5 text-xs sm:text-sm font-semibold rounded-lg border border-gray-200 hover:border-blue-600 hover:bg-blue-50 transition">4</button>
+                    <button type="button" onclick="setScore(5)" class="score-btn py-2.5 text-xs sm:text-sm font-semibold rounded-lg border border-gray-200 hover:border-blue-600 hover:bg-blue-50 transition">5</button>
+                    <button type="button" onclick="setScore(6)" class="score-btn py-2.5 text-xs sm:text-sm font-semibold rounded-lg border border-gray-200 hover:border-blue-600 hover:bg-blue-50 transition">6</button>
+                    <button type="button" onclick="setScore(7)" class="score-btn py-2.5 text-xs sm:text-sm font-semibold rounded-lg border border-gray-200 hover:border-blue-600 hover:bg-blue-50 transition">7</button>
+                    <button type="button" onclick="setScore(8)" class="score-btn py-2.5 text-xs sm:text-sm font-semibold rounded-lg border border-gray-200 hover:border-blue-600 hover:bg-blue-50 transition">8</button>
+                    <button type="button" onclick="setScore(9)" class="score-btn py-2.5 text-xs sm:text-sm font-semibold rounded-lg border border-gray-200 hover:border-blue-600 hover:bg-blue-50 transition">9</button>
+                    <button type="button" onclick="setScore(10)" class="score-btn col-span-2 sm:col-span-1 py-2.5 text-xs sm:text-sm font-semibold rounded-lg border border-gray-200 hover:border-blue-600 hover:bg-blue-50 transition">10</button>
+                </div>
+                <input type="hidden" id="satisfactionScore" required>
+                <div class="flex justify-between text-xs text-gray-400 px-1 mt-1">
+                    <span>0 (Nada satisfeito)</span>
+                    <span>10 (Extremamente satisfeito)</span>
+                </div>
+            </div>
+
+            <!-- CARD 3: Comunicação e Atendimento -->
+            <div class="bg-white rounded-[2rem] p-6 sm:p-8 shadow-2xl card-stack border border-white/20">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full">Passo 3 de 5</span>
+                </div>
+                <label class="block text-lg font-bold text-gray-900 mb-1">Comunicação e Atendimento</label>
+                <p class="text-xs text-gray-500 mb-4">Como você avalia a clareza na comunicação, alinhamento e agilidade no dia a dia?</p>
+                
+                <div class="grid grid-cols-2 gap-3">
+                    <button type="button" onclick="setOption('communication', 'Excelente', this)" class="opt-comm p-3.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-blue-600 hover:bg-blue-50 transition text-center">Excelente</button>
+                    <button type="button" onclick="setOption('communication', 'Bom', this)" class="opt-comm p-3.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-blue-600 hover:bg-blue-50 transition text-center">Bom</button>
+                    <button type="button" onclick="setOption('communication', 'Regular', this)" class="opt-comm p-3.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-blue-600 hover:bg-blue-50 transition text-center">Regular</button>
+                    <button type="button" onclick="setOption('communication', 'Ruim', this)" class="opt-comm p-3.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-blue-600 hover:bg-blue-50 transition text-center">Ruim</button>
+                </div>
+                <input type="hidden" id="communication" required>
+            </div>
+
+            <!-- CARD 4: Clareza de Relatórios -->
+            <div class="bg-white rounded-[2rem] p-6 sm:p-8 shadow-2xl card-stack border border-white/20">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full">Passo 4 de 5</span>
+                </div>
+                <label class="block text-lg font-bold text-gray-900 mb-1">Clareza de Relatórios</label>
+                <p class="text-xs text-gray-500 mb-4">Os relatórios entregues ajudam a compreender com clareza o retorno sobre o investimento (ROI/ROAS)?</p>
+                
+                <div class="space-y-2.5">
+                    <button type="button" onclick="setOption('reports', 'Sim, totalmente', this)" class="opt-rep w-full p-3.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-blue-600 hover:bg-blue-50 transition text-left flex items-center justify-between">
+                        <span>Sim, totalmente claros e úteis</span>
+                        <div class="w-4 h-4 rounded-full border border-gray-300 flex items-center justify-center"></div>
+                    </button>
+                    <button type="button" onclick="setOption('reports', 'Parcialmente', this)" class="opt-rep w-full p-3.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-blue-600 hover:bg-blue-50 transition text-left flex items-center justify-between">
+                        <span>Parcialmente</span>
+                        <div class="w-4 h-4 rounded-full border border-gray-300 flex items-center justify-center"></div>
+                    </button>
+                    <button type="button" onclick="setOption('reports', 'Não muito', this)" class="opt-rep w-full p-3.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-blue-600 hover:bg-blue-50 transition text-left flex items-center justify-between">
+                        <span>Não muito claros</span>
+                        <div class="w-4 h-4 rounded-full border border-gray-300 flex items-center justify-center"></div>
+                    </button>
+                    <button type="button" onclick="setOption('reports', 'Nada claros', this)" class="opt-rep w-full p-3.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:border-blue-600 hover:bg-blue-50 transition text-left flex items-center justify-between">
+                        <span>Nada claros</span>
+                        <div class="w-4 h-4 rounded-full border border-gray-300 flex items-center justify-center"></div>
+                    </button>
+                </div>
+                <input type="hidden" id="reports" required>
+            </div>
+
+            <!-- CARD 5: Percepção de Valor e Sugestões -->
+            <div class="bg-white rounded-[2rem] p-6 sm:p-8 shadow-2xl card-stack border border-white/20">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-3 py-1 rounded-full">Passo 5 de 5</span>
+                </div>
+                <label class="block text-lg font-bold text-gray-900 mb-1">Resultados e Feedback</label>
+                <p class="text-xs text-gray-500 mb-4">As campanhas estão contribuindo de forma efetiva para os objetivos do seu negócio?</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-6">
+                    <button type="button" onclick="setOption('results', 'Superaram', this)" class="opt-res p-3 rounded-xl border border-gray-200 text-xs font-semibold text-gray-700 hover:border-blue-600 hover:bg-blue-50 transition text-center">Superaram expectativas</button>
+                    <button type="button" onclick="setOption('results', 'Atendem', this)" class="opt-res p-3 rounded-xl border border-gray-200 text-xs font-semibold text-gray-700 hover:border-blue-600 hover:bg-blue-50 transition text-center">Atendem ao esperado</button>
+                    <button type="button" onclick="setOption('results', 'Abaixo', this)" class="opt-res p-3 rounded-xl border border-gray-200 text-xs font-semibold text-gray-700 hover:border-blue-600 hover:bg-blue-50 transition text-center">Abaixo do esperado</button>
+                </div>
+                <input type="hidden" id="results" required>
+
+                <label for="suggestions" class="block text-sm font-bold text-gray-800 mb-2">Sugestões, críticas ou o que podemos melhorar nos próximos meses:</label>
+                <textarea id="suggestions" rows="3" placeholder="Deixe seu comentário livre..." 
+                    class="w-full p-3.5 rounded-xl border border-gray-200 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 outline-none transition text-sm resize-none"></textarea>
+            </div>
+
+            <!-- Botão de Envio -->
+            <div class="pt-2">
+                <button type="submit" id="submitBtn" class="w-full py-4 px-6 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-bold rounded-2xl shadow-xl shadow-blue-600/30 transition flex items-center justify-center space-x-2 text-base">
+                    <span>Enviar Resposta</span>
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                </button>
+            </div>
+        </form>
+
+        <!-- TELA DE SUCESSO (Oculta por padrão) -->
+        <div id="successCard" class="hidden bg-white rounded-[2rem] p-8 sm:p-10 shadow-2xl text-center space-y-4 animate-fade-in border border-white/20">
+            <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-2 shadow-inner">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
+                </svg>
+            </div>
+            <h2 class="text-2xl font-bold text-gray-900">Muito Obrigado!</h2>
+            <p class="text-gray-600 text-sm sm:text-base max-w-sm mx-auto">Sua resposta foi registrada com sucesso. Continuaremos trabalhando duro para impulsionar ainda mais os seus resultados!</p>
+            <div class="pt-4">
+                <button onclick="resetForm()" class="px-6 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl text-sm transition">Enviar nova resposta</button>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // CONFIGURAÇÃO DA SUA URL DO GOOGLE APPS SCRIPT
+        // Cole aqui a URL gerada ao publicar o Apps Script no Google Sheets
+        const GOOGLE_SCRIPT_URL = 'SUA_URL_DO_GOOGLE_APPS_SCRIPT_AQUI';
+
+        let formDataState = {
+            clientName: '',
+            satisfactionScore: null,
+            communication: '',
+            reports: '',
+            results: '',
+            suggestions: ''
+        };
+
+        function setScore(score) {
+            formDataState.satisfactionScore = score;
+            document.getElementById('satisfactionScore').value = score;
+            
+            // Estilizar botões de nota
+            const buttons = document.querySelectorAll('.score-btn');
+            buttons.forEach((btn, idx) => {
+                if(idx === score) {
+                    btn.classList.add('bg-blue-600', 'text-white', 'border-blue-600', 'shadow-md');
+                    btn.classList.remove('border-gray-200', 'hover:bg-blue-50');
+                } else {
+                    btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-600', 'shadow-md');
+                    btn.classList.add('border-gray-200', 'hover:bg-blue-50');
+                }
+            });
+        }
+
+        function setOption(field, value, element) {
+            formDataState[field] = value;
+            document.getElementById(field).value = value;
+
+            // Identificar grupo de botões correspondente
+            let selector = '';
+            if(field === 'communication') selector = '.opt-comm';
+            if(field === 'reports') selector = '.opt-rep';
+            if(field === 'results') selector = '.opt-res';
+
+            const buttons = document.querySelectorAll(selector);
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-600', 'shadow-md');
+                btn.classList.add('border-gray-200');
+            });
+
+            element.classList.add('bg-blue-600', 'text-white', 'border-blue-600', 'shadow-md');
+            element.classList.remove('border-gray-200');
+        }
+
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+
+            formDataState.clientName = document.getElementById('clientName').value;
+            formDataState.suggestions = document.getElementById('suggestions').value;
+
+            // Validação simples
+            if(formDataState.satisfactionScore === null) {
+                alert('Por favor, selecione uma nota de satisfação geral.');
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                >
+                </svg>
+                Enviando dados...
+            `;
+
+            const payload = {
+                date: new Date().toLocaleString('pt-BR'),
+                clientName: formDataState.clientName,
+                satisfactionScore: formDataState.satisfactionScore,
+                communication: formDataState.communication,
+                reports: formDataState.reports,
+                results: formDataState.results,
+                suggestions: formDataState.suggestions
+            };
+
+            try {
+                // Caso a URL padrão ainda esteja configurada, simulamos o envio com sucesso para teste visual
+                if(GOOGLE_SCRIPT_URL.includes('SUA_URL_DO_GOOGLE_APPS_SCRIPT')) {
+                    await new Promise(resolve => setTimeout(resolve, 1200)); // Simula delay de rede
+                } else {
+                    await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                }
+
+                // Exibir tela de sucesso
+                document.getElementById('surveyForm').classList.add('hidden');
+                document.getElementById('successCard').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            } catch (error) {
+                console.error('Erro ao enviar:', error);
+                alert('Ocorreu um erro ao enviar. Por favor, tente novamente.');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `<span>Enviar Resposta</span><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>`;
+            }
+        }
+
+        function resetForm() {
+            document.getElementById('surveyForm').reset();
+            document.getElementById('successCard').classList.add('hidden');
+            document.getElementById('surveyForm').classList.remove('hidden');
+            
+            // Limpar estados visuais dos botões
+            document.querySelectorAll('.score-btn, .opt-comm, .opt-rep, .opt-res').forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-600', 'shadow-md');
+                btn.classList.add('border-gray-200');
+            });
+
+            formDataState = { clientName: '', satisfactionScore: null, communication: '', reports: '', results: '', suggestions: '' };
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = `<span>Enviar Resposta</span><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>`;
+        }
+    </script>
+</body>
+</html>
